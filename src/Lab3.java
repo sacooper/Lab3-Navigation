@@ -1,16 +1,27 @@
-/*
- * Lab3.java
- * 
- * Called on start; Controls what the robot does.
- */
-import lejos.nxt.*;
+import lejos.nxt.Button;
+import lejos.nxt.LCD;
+import lejos.nxt.Motor;
+import lejos.nxt.NXTRegulatedMotor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.UltrasonicSensor;
 
+
+/********************
+ * Group 5
+ * @author Scott Cooper - 260503452
+ * @author Liqiang Ding - 260457392
+ * <br>
+ * 
+ * Entry point for Lab 3. Left button press
+ * runs the block avoidance. Right button
+ * press runs the navigation
+ */
 public class Lab3 {
 	
 	
 	/* Wheel based and wheel radius */
 	public static final double 
-		WHEEL_RADIUS = 2.14,
+		WHEEL_RADIUS = 2.13,
 		WHEEL_BASE = 15.7;
 	
 	public static final NXTRegulatedMotor
@@ -46,8 +57,8 @@ public class Lab3 {
 		
 		while (buttonChoice != AVOID && buttonChoice != TO_LOC) buttonChoice = Button.waitForAnyPress();
 
-		try { Thread.sleep(1000);
-		} catch (InterruptedException e) {}
+		try { Thread.sleep(1000); } 
+		catch (InterruptedException e) {}
 		
 		int i = 0;
 		switch (buttonChoice){
@@ -59,6 +70,9 @@ public class Lab3 {
 			//starts odometer thread
 			odometer.start();
 
+			/* More complex iteration was necessary to prevent
+			 * A change in the destination during avoidance
+			 */
 			while (i < avoidLocList.length){
 				boolean travel = false;
 				synchronized(navigator){
@@ -76,6 +90,10 @@ public class Lab3 {
 			break;
 		case TO_LOC:
 			odometer.start();
+			
+			/* More complex iteration was necessary to prevent
+			 * A change in the destination during avoidance
+			 */
 			while (i < locList.length){
 				synchronized(navigator){
 				if (navigator.isNavigating()){

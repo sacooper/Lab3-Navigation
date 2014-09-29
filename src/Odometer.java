@@ -12,7 +12,7 @@ import lejos.nxt.*;
  */
 public class Odometer extends Thread {		
 	// odometer update period, in ms
-	private static final int ODOMETER_PERIOD = 25;
+	private static final int ODOMETER_PERIOD = 10;
 
 	// Tile size (difference between lines)
 	protected static final double TILE_SIZE = 30.48;

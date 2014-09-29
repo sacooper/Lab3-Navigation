@@ -46,12 +46,14 @@ public class Driver extends Thread {
 			double distance  = Math.sqrt(Math.pow((y-getYr()), 2) + Math.pow((x-getXr()),2));
 			//finds minimum angle to turn (ie: it's easier to turn +90 deg instead of -270)
 			
-			if(theta < -180)
+			Avoid.disable();
+			if(theta <= -180)
 				turnTo(theta + 360);
 			else if(theta > 180)
 				turnTo(theta - 360);
 			else turnTo(theta);
 			
+			Avoid.enable();
 			goForward(distance);
 			
 			navigating = false;
